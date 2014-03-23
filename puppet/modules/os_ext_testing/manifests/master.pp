@@ -206,28 +206,28 @@ class os_ext_testing::master (
 
 
   if $upstream_gerrit_ssh_pub_key != '' {
-    file { '/home/zuul/.ssh':
+    file { '/labhome/zuul/.ssh':
       ensure  => directory,
       owner   => 'zuul',
       group   => 'zuul',
       mode    => '0700',
       require => Class['::zuul'],
     }
-    file { '/home/zuul/.ssh/known_hosts':
+    file { '/labhome/zuul/.ssh/known_hosts':
       ensure  => present,
       owner   => 'zuul',
       group   => 'zuul',
       mode    => '0600',
       content => "[review.openstack.org]:29418,[198.101.231.251]:29418 ${upstream_gerrit_host_pub_key}",
       replace => true,
-      require => File['/home/zuul/.ssh'],
+      require => File['/labhome/zuul/.ssh'],
     }
-    file { '/home/zuul/.ssh/config':
+    file { '/labhome/zuul/.ssh/config':
       ensure  => present,
       owner   => 'zuul',
       group   => 'zuul',
       mode    => '0700',
-      require => File['/home/zuul/.ssh'],
+      require => File['/labhome/zuul/.ssh'],
       source  => 'puppet:///modules/jenkins/ssh_config',
     }
   }
