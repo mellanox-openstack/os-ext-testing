@@ -10,7 +10,7 @@ THIS_DIR=`pwd`
 DATA_REPO_INFO_FILE=$THIS_DIR/.data_repo_info
 DATA_PATH=$THIS_DIR/data
 OSEXT_PATH=$THIS_DIR/os-ext-testing
-OSEXT_REPO=https://github.com/jaypipes/os-ext-testing
+OSEXT_REPO=https://github.com/mellanox-openstack/os-ext-testing.git
 PUPPET_MODULE_PATH="--modulepath=$OSEXT_PATH/puppet/modules:/root/config/modules:/etc/puppet/modules"
 
 # Install Puppet and the OpenStack Infra Config source tree
@@ -25,7 +25,7 @@ fi
 # Clone or pull the the os-ext-testing repository
 if [[ ! -d $OSEXT_PATH ]]; then
     echo "Cloning os-ext-testing repo..."
-    git clone $OSEXT_REPO $OSEXT_PATH
+    git clone $OSEXT_REPO -b mlnx $OSEXT_PATH
 fi
 
 if [[ "$PULL_LATEST_OSEXT_REPO" == "1" ]]; then
@@ -120,9 +120,8 @@ CLASS_ARGS="$CLASS_ARGS upstream_gerrit_user => '$UPSTREAM_GERRIT_USER', "
 CLASS_ARGS="$CLASS_ARGS upstream_gerrit_ssh_private_key => '$UPSTREAM_GERRIT_SSH_PRIVATE_KEY_CONTENTS', "
 CLASS_ARGS="$CLASS_ARGS upstream_gerrit_host_pub_key => '$UPSTREAM_GERRIT_HOST_PUB_KEY', "
 CLASS_ARGS="$CLASS_ARGS git_email => '$GIT_EMAIL', git_name => '$GIT_NAME', "
-CLASS_ARGS="$CLASS_ARGS publish_host => '$PUBLISH_HOST', "
+CLASS_ARGS="$CLASS_ARGS publish_host => '$PUBLISH_HOST', url_pattern => '$URL_PATTERN', "
 CLASS_ARGS="$CLASS_ARGS data_repo_dir => '$DATA_PATH', "
-CLASS_ARGS="$CLASS_ARGS url_pattern => '$URL_PATTERN', "
 
 # Doing this here because ran into one problem after another trying
 # to do this in Puppet... which won't let me execute Ruby code in
